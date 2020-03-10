@@ -97,6 +97,7 @@ const searchMovies = (limit, metascore) => {
             metascore: { $gte: metascore }
           })
           .limit(limit)
+          .sort({ metascore: -1 })
           .toArray();
         if (movies.length > 0) resolve(movies);
         else
