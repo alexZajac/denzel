@@ -6,6 +6,7 @@ const { METASCORE_DEFAULT } = require("./constants");
  * Movie type
  * @typedef {Object} Movie
  * @property {String} _id - MongoDB id
+ * @property {Array} reviews - Reviews added by the 5th endpoint
  * @property {String} link - Link to IMDB
  * @property {String} id - IMDB movie id
  * @property {number} metascore - score to rank the movie
@@ -92,6 +93,7 @@ const searchMovies = (limit, metascore) => {
       try {
         const movies = await collection
           .find({
+            // metascore greater or equal
             metascore: { $gte: metascore }
           })
           .limit(limit)
@@ -108,8 +110,43 @@ const searchMovies = (limit, metascore) => {
   });
 };
 
+/**
+ * Saves a review for a film into the DB
+ * @param {number} date - the date of the review
+ * @param {number} review - The content of the review
+ * @return {Object} The updated id object
+ */
+const saveReview = (id, date, review) => {
+  const client = new MongoClient(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+  return new Promise((resolve, reject) => {
+    client.connect(async err => {
+      if (err) reject({ message: err });
+      const collection = client.db("main").collection("movies");
+      // all server side with MongoDB
+      try {
+        const res = await collection.findOneAndUpdate(
+          { id },
+          { $push: { reviews: { date, review } } }
+        );
+        if (res && res.value !== null) {
+          const {
+            value: { _id }
+          } = res;
+          resolve({ _id });
+        } else reject({ message: "Can't find this id in the DB." });
+      } catch (e) {
+        reject({ message: e });
+      }
+    });
+  });
+};
+
 module.exports = {
   getMustwatchMovie,
   getMovie,
-  searchMovies
+  searchMovies,
+  saveReview
 };

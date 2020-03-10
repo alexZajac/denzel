@@ -57,6 +57,7 @@ app.get("/movies/:id", async (request, response) => {
   try {
     // search movies route
     if (id === "search") {
+      // parse parameters with defaults, to int
       let limit = parseInt(request.query.limit || LIMIT_SEARCH);
       let metascore = parseInt(request.query.metascore || METASCORE_SEARCH);
       const results = await dbProvider.searchMovies(limit, metascore);
@@ -65,6 +66,21 @@ app.get("/movies/:id", async (request, response) => {
       const movie = await dbProvider.getMovie(id);
       response.send(movie);
     }
+  } catch (e) {
+    response.status(404).send({ error: e.message });
+  }
+});
+
+/*
+FIFTH ENDPOINT: post a review to the specific movie
+*/
+app.post("/movies/:id", async (request, response) => {
+  const { id } = request.params;
+  // if not provided, adds null
+  const { date, review } = request.body;
+  try {
+    const result = await dbProvider.saveReview(id, date, review);
+    response.send(result);
   } catch (e) {
     response.status(404).send({ error: e.message });
   }
