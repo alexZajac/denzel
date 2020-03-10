@@ -6,6 +6,7 @@ const P_LIMIT = 25;
 const LIMIT_SEARCH = 5;
 const METASCORE_SEARCH = 0;
 const PORT = "9292";
+const METASCORE_DEFAULT = 70;
 const MONGO_URI =
   "mongodb+srv://dbUser:2ExdAZ8oYImQBR1V@denzelcluster-pv8n7.azure.mongodb.net/test?retryWrites=true&w=majority";
 
@@ -14,6 +15,7 @@ module.exports = {
   IMDB_TITLE_URL,
   IMDB_URL,
   DENZEL_IMDB_ID,
+  METASCORE_DEFAULT,
   MONGO_URI,
   LIMIT_SEARCH,
   METASCORE_SEARCH,

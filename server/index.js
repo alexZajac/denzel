@@ -42,7 +42,7 @@ SECOND ENDPOINT: Return a random must watch movie from the DB
 */
 app.get("/movies", async (request, response) => {
   try {
-    const random_movie = await dbProvider.getRandomMovie();
+    const random_movie = await dbProvider.getMustwatchMovie();
     response.send(random_movie);
   } catch (e) {
     response.status(404).send({ error: e.message });

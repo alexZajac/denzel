@@ -1,5 +1,6 @@
 const { MONGO_URI } = require("./constants");
 const { MongoClient } = require("mongodb");
+const { METASCORE_DEFAULT } = require("./constants");
 
 /**
  * Movie type
@@ -19,21 +20,29 @@ const { MongoClient } = require("mongodb");
  * Gets a random movie from the DB
  * @return {Movie} Movie from the DB
  */
-const getRandomMovie = () => {
+const getMustwatchMovie = () => {
   const client = new MongoClient(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
   return new Promise((resolve, reject) => {
     client.connect(async err => {
-      if (err) reject(err);
+      if (err) reject({ message: err });
       const collection = client.db("main").collection("movies");
       // random movie syntax, on the db side instead of fetching all documents
-      const random_movie = await collection
-        .aggregate([{ $sample: { size: 1 } }])
-        .toArray();
-      if (random_movie.length > 0) resolve(random_movie[0]);
-      else reject({ message: "No movie found on the DB." });
+      try {
+        const all_movies = await collection.find().toArray();
+        const awesome_movies = all_movies.filter(
+          movie => movie.metascore >= METASCORE_DEFAULT
+        );
+        if (awesome_movies.length > 0)
+          resolve(
+            awesome_movies[Math.floor(Math.random() * awesome_movies.length)]
+          );
+        else reject({ message: "No awesome metascore movies!" });
+      } catch (e) {
+        reject({ message: e });
+      }
     });
   });
 };
@@ -50,7 +59,7 @@ const getMovie = id => {
   });
   return new Promise((resolve, reject) => {
     client.connect(async err => {
-      if (err) reject(err);
+      if (err) reject({ message: err });
       const collection = client.db("main").collection("movies");
       // random movie syntax, on the db side instead of fetching all documents
       try {
@@ -58,7 +67,7 @@ const getMovie = id => {
         if (movie) resolve(movie);
         else reject({ message: "No movie found with that id." });
       } catch (e) {
-        reject(e);
+        reject({ message: e });
       }
     });
   });
@@ -77,7 +86,7 @@ const searchMovies = (limit, metascore) => {
   });
   return new Promise((resolve, reject) => {
     client.connect(async err => {
-      if (err) reject(err);
+      if (err) reject({ message: err });
       const collection = client.db("main").collection("movies");
       // all server side with MongoDB
       try {
@@ -93,14 +102,14 @@ const searchMovies = (limit, metascore) => {
             message: "No movie found on the DB with these constraints."
           });
       } catch (e) {
-        reject(e);
+        reject({ message: e });
       }
     });
   });
 };
 
 module.exports = {
-  getRandomMovie,
+  getMustwatchMovie,
   getMovie,
   searchMovies
 };
