@@ -1,6 +1,6 @@
-const { MONGO_URI } = require("./constants");
+const { MONGO_URI } = require("../constants");
 const { MongoClient } = require("mongodb");
-const { METASCORE_DEFAULT } = require("./constants");
+const { METASCORE_DEFAULT } = require("../constants");
 
 /**
  * Movie type

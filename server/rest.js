@@ -1,6 +1,7 @@
 const cors = require("cors");
 const express = require("express");
 const helmet = require("helmet");
+
 const {
   PORT,
   DENZEL_IMDB_ID,
@@ -8,7 +9,7 @@ const {
   METASCORE_SEARCH
 } = require("./constants");
 const populateMovies = require("./imdb");
-const dbProvider = require("./dbprovider");
+const dbProvider = require("./utils/dbprovider");
 
 const app = express();
 
