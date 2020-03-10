@@ -3,6 +3,7 @@ const express = require("express");
 const helmet = require("helmet");
 const { PORT, DENZEL_IMDB_ID } = require("./constants");
 const populateMovies = require("./imdb");
+const dbProvider = require("./dbprovider");
 
 const app = express();
 
@@ -27,7 +28,18 @@ app.get("/movies/populate/:id", async (request, response) => {
     const results = await populateMovies(actorId);
     response.send({ total: results.length });
   } catch (e) {
-    console.log(e);
+    response.status(404).send({ error: e.message });
+  }
+});
+
+/*
+SECOND ENDPOINT: Return a random must watch movie from the DB
+*/
+app.get("/movies", async (request, response) => {
+  try {
+    const random_movie = await dbProvider.getRandomMovie();
+    response.send(random_movie);
+  } catch (e) {
     response.status(404).send({ error: e.message });
   }
 });
