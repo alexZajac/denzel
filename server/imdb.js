@@ -25,8 +25,7 @@ const getFilmography = async actor => {
       })
       .get();
   } catch (error) {
-    console.error(error);
-    return [];
+    throw error;
   }
 };
 
@@ -61,22 +60,21 @@ const getMovie = async link => {
       year: Number($("#titleYear a").text())
     };
   } catch (error) {
-    console.error(error);
-    return {};
+    throw error;
   }
 };
 
 /**
- * Get movie from an imdb link
- * @param  {String} link
- * @return {Object}
+ * writes movies for specific actor to db
+ * @param  {Array} movies - Movies to populate
+ * @return {number} Number of movies inserted
  */
-const writeToDatabase = movies => {
+const writeToDatabase = async movies => {
+  const client = new MongoClient(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
   return new Promise((resolve, reject) => {
-    const client = new MongoClient(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
     client.connect(err => {
       if (err) reject(err);
       const collection = client.db("main").collection("movies");
@@ -113,7 +111,7 @@ module.exports = async actor => {
   const isFulfilled = results
     .filter(result => result.isFulfilled)
     .map(result => result.value);
-  const results = [].concat.apply([], isFulfilled);
-  await writeToDatabase(results);
-  return results.length;
+  const movies = [].concat.apply([], isFulfilled);
+  if (movies.length > 0) await writeToDatabase(movies);
+  return movies;
 };
