@@ -1,4 +1,10 @@
-const { GraphQLObjectType, GraphQLString } = require("graphql");
+const { GraphQLObjectType, GraphQLString, GraphQLInt } = require("graphql");
+const {
+  helloResolver,
+  populateResolver,
+  randomMovieResolver
+} = require("./resolvers");
+const { populateType, movieType } = require("./types");
 
 //Define the Query
 const queryType = new GraphQLObjectType({
@@ -6,10 +12,18 @@ const queryType = new GraphQLObjectType({
   fields: {
     hello: {
       type: GraphQLString,
-
-      resolve: () => {
-        return "Hello World";
-      }
+      resolve: helloResolver
+    },
+    populate: {
+      type: populateType,
+      args: {
+        id: { type: GraphQLString }
+      },
+      resolve: populateResolver
+    },
+    randomMovie: {
+      type: movieType,
+      resolve: randomMovieResolver
     }
   }
 });
