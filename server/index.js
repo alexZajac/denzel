@@ -1,7 +1,10 @@
 const cors = require("cors");
 const express = require("express");
 const helmet = require("helmet");
+const graphqlHTTP = require("express-graphql");
+const { GraphQLSchema } = require("graphql");
 
+const { queryType } = require("./utils/graphql/query");
 const {
   PORT,
   DENZEL_IMDB_ID,
@@ -12,12 +15,20 @@ const populateMovies = require("./imdb");
 const dbProvider = require("./utils/dbprovider");
 
 const app = express();
+const schema = new GraphQLSchema({ query: queryType });
 
 module.exports = app;
 
 app.use(require("body-parser").json());
 app.use(cors());
 app.use(helmet());
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema,
+    graphiql: true
+  })
+);
 
 app.options("*", cors());
 
