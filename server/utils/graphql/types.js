@@ -44,7 +44,18 @@ const movieType = new GraphQLObjectType({
   }
 });
 
+const movieSearchType = new GraphQLObjectType({
+  name: "movieSearchType",
+  fields: {
+    limit: { type: GraphQLInt },
+    metascore: { type: GraphQLInt },
+    results: { type: new GraphQLList(movieType) },
+    error: { type: GraphQLString }
+  }
+});
+
 module.exports = {
   populateType,
+  movieSearchType,
   movieType
 };

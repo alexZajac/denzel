@@ -22,8 +22,31 @@ const randomMovieResolver = async () => {
   }
 };
 
+const movieResolver = async (_, args) => {
+  const { id } = args;
+  try {
+    const movie = await dbProvider.getMovie(id);
+    return movie;
+  } catch (e) {
+    return { error: e.message };
+  }
+};
+
+const searchMovieResolver = async (_, args) => {
+  try {
+    let limit = parseInt(args.limit);
+    let metascore = parseInt(args.metascore);
+    const results = await dbProvider.searchMovies(limit, metascore);
+    return { limit, metascore, results };
+  } catch (e) {
+    return { error: e.message };
+  }
+};
+
 module.exports = {
   helloResolver,
   populateResolver,
-  randomMovieResolver
+  randomMovieResolver,
+  movieResolver,
+  searchMovieResolver
 };

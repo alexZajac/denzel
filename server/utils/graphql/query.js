@@ -2,9 +2,11 @@ const { GraphQLObjectType, GraphQLString, GraphQLInt } = require("graphql");
 const {
   helloResolver,
   populateResolver,
-  randomMovieResolver
+  randomMovieResolver,
+  movieResolver,
+  searchMovieResolver
 } = require("./resolvers");
-const { populateType, movieType } = require("./types");
+const { populateType, movieType, movieSearchType } = require("./types");
 
 //Define the Query
 const queryType = new GraphQLObjectType({
@@ -24,6 +26,21 @@ const queryType = new GraphQLObjectType({
     randomMovie: {
       type: movieType,
       resolve: randomMovieResolver
+    },
+    movie: {
+      type: movieType,
+      args: {
+        id: { type: GraphQLString }
+      },
+      resolve: movieResolver
+    },
+    searchMovie: {
+      type: movieSearchType,
+      args: {
+        limit: { type: GraphQLInt, defaultValue: 5 },
+        metascore: { type: GraphQLInt, defaultValue: 0 }
+      },
+      resolve: searchMovieResolver
     }
   }
 });
