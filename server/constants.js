@@ -1,8 +1,9 @@
-const IMDB_NAME_URL = 'https://www.imdb.com/name';
-const IMDB_TITLE_URL = 'https://www.imdb.com/title';
-const IMDB_URL = 'https://www.imdb.com';
+const IMDB_NAME_URL = "https://www.imdb.com/name";
+const IMDB_TITLE_URL = "https://www.imdb.com/title";
+const IMDB_URL = "https://www.imdb.com";
 const P_LIMIT = 25;
-const PORT = '9292';
+const PORT = "9292";
+const MONGO_URI = "";
 
 module.exports = {
   IMDB_NAME_URL,
