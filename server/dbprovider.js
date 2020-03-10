@@ -1,6 +1,24 @@
 const { MONGO_URI } = require("./constants");
 const { MongoClient } = require("mongodb");
 
+/**
+ * Movie type
+ * @typedef {Object} Movie
+ * @property {String} _id - MongoDB id
+ * @property {String} link - Link to IMDB
+ * @property {String} id - IMDB movie id
+ *  @property {number} metascore - score to rank the movie
+ * @property {String} poster - link to poster url
+ * @property {number} rating - rating of the movie
+ *  @property {String} synopsis - Description of the movie
+ * @property {String} title - title of the movie
+ * @property {number} votes - number of votes
+ * @property {number} year - year of release
+ */
+/**
+ * Gets a random movie from the DB
+ * @return {Movie} Movie from the DB
+ */
 const getRandomMovie = () => {
   const client = new MongoClient(MONGO_URI, {
     useNewUrlParser: true,
@@ -20,6 +38,47 @@ const getRandomMovie = () => {
   });
 };
 
+/**
+ * Movie type
+ * @typedef {Object} Movie
+ * @property {String} _id - MongoDB id
+ * @property {String} link - Link to IMDB
+ * @property {String} id - IMDB movie id
+ * @property {number} metascore - score to rank the movie
+ * @property {String} poster - link to poster url
+ * @property {number} rating - rating of the movie
+ * @property {String} synopsis - Description of the movie
+ * @property {String} title - title of the movie
+ * @property {number} votes - number of votes
+ * @property {number} year - year of release
+ */
+/**
+ * Gets a random movie from the DB
+ * @param {String} movieId - the id of the movie
+ * @return {Movie} Movie from the DB
+ */
+const getMovie = id => {
+  const client = new MongoClient(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+  return new Promise((resolve, reject) => {
+    client.connect(async err => {
+      if (err) reject(err);
+      const collection = client.db("main").collection("movies");
+      // random movie syntax, on the db side instead of fetching all documents
+      try {
+        const movie = await collection.findOne({ id });
+        if (movie) resolve(movie);
+        else reject({ message: "No movie found with that id." });
+      } catch (e) {
+        reject(e);
+      }
+    });
+  });
+};
+
 module.exports = {
-  getRandomMovie
+  getRandomMovie,
+  getMovie
 };

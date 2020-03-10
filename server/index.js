@@ -44,5 +44,18 @@ app.get("/movies", async (request, response) => {
   }
 });
 
+/*
+THIRD ENDPOINT: get specific movie id
+*/
+app.get("/movies/:id", async (request, response) => {
+  const { id: movieId } = request.params;
+  try {
+    const movie = await dbProvider.getMovie(movieId);
+    response.send(movie);
+  } catch (e) {
+    response.status(404).send({ error: e.message });
+  }
+});
+
 app.listen(PORT);
 console.log(`📡 Running on port ${PORT}`);
