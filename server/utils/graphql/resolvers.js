@@ -43,10 +43,21 @@ const searchMovieResolver = async (_, args) => {
   }
 };
 
+const postReviewResolver = async (_, args) => {
+  const { id, date, review } = args;
+  try {
+    const result = await dbProvider.saveReview(id, date, review);
+    return result;
+  } catch (e) {
+    return { error: e.message };
+  }
+};
+
 module.exports = {
   helloResolver,
   populateResolver,
   randomMovieResolver,
   movieResolver,
-  searchMovieResolver
+  searchMovieResolver,
+  postReviewResolver
 };

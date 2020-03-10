@@ -54,8 +54,17 @@ const movieSearchType = new GraphQLObjectType({
   }
 });
 
+const movieIdType = new GraphQLObjectType({
+  name: "movieIdType",
+  fields: {
+    _id: { type: GraphQLID },
+    error: { type: GraphQLString }
+  }
+});
+
 module.exports = {
   populateType,
   movieSearchType,
-  movieType
+  movieType,
+  movieIdType
 };

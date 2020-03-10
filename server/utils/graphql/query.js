@@ -4,9 +4,15 @@ const {
   populateResolver,
   randomMovieResolver,
   movieResolver,
-  searchMovieResolver
+  searchMovieResolver,
+  postReviewResolver
 } = require("./resolvers");
-const { populateType, movieType, movieSearchType } = require("./types");
+const {
+  populateType,
+  movieType,
+  movieSearchType,
+  movieIdType
+} = require("./types");
 
 //Define the Query
 const queryType = new GraphQLObjectType({
@@ -41,6 +47,15 @@ const queryType = new GraphQLObjectType({
         metascore: { type: GraphQLInt, defaultValue: 0 }
       },
       resolve: searchMovieResolver
+    },
+    postReview: {
+      type: movieIdType,
+      args: {
+        id: { type: GraphQLString },
+        date: { type: GraphQLString, defaultValue: null },
+        review: { type: GraphQLString, defaultValue: null }
+      },
+      resolve: postReviewResolver
     }
   }
 });
