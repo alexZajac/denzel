@@ -48,7 +48,7 @@ const MovieContainer = ({ movies, loading }) => {
     <Container>
       {loading
         ? [null, null, null].map((_, i) => <SkeletonMovie key={i} />)
-        : movies && movies.length === 0
+        : !movies || movies.length === 0
         ? renderEmptyMovies()
         : movies.map(m => <Movie key={m._id} content={m} />)}
     </Container>

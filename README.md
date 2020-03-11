@@ -19,6 +19,7 @@
     - [GraphQL implemented](#graphql-implemented)
       - [Here are the endpoints with the schema](#here-are-the-endpoints-with-the-schema)
     - [Bonus - The Client side](#bonus---the-client-side)
+    - [Todo:](#todo)
 
 ## 🎯 Objectives of the project
 
@@ -265,3 +266,9 @@ You can search through **either one of the two APIs**, and select a **limit** an
   - display the metascore
   - display the review
   - allow to open the IMDb record
+
+### Todo:
+
+- Responsiveness for the client
+- Error checking and comments when needed
+- Secure API
