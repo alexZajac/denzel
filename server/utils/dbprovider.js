@@ -28,7 +28,7 @@ const getMustwatchMovie = () => {
   });
   return new Promise((resolve, reject) => {
     client.connect(async err => {
-      if (err) reject({ message: err });
+      if (err) return reject({ message: err });
       const collection = client.db("main").collection("movies");
       // random movie syntax, on the db side instead of fetching all documents
       try {
@@ -60,7 +60,7 @@ const getMovie = id => {
   });
   return new Promise((resolve, reject) => {
     client.connect(async err => {
-      if (err) reject({ message: err });
+      if (err) return reject({ message: err });
       const collection = client.db("main").collection("movies");
       // random movie syntax, on the db side instead of fetching all documents
       try {
@@ -87,7 +87,7 @@ const searchMovies = (limit, metascore) => {
   });
   return new Promise((resolve, reject) => {
     client.connect(async err => {
-      if (err) reject({ message: err });
+      if (err) return reject({ message: err });
       const collection = client.db("main").collection("movies");
       // all server side with MongoDB
       try {
@@ -124,7 +124,7 @@ const saveReview = (id, date, review) => {
   });
   return new Promise((resolve, reject) => {
     client.connect(async err => {
-      if (err) reject({ message: err });
+      if (err) return reject({ message: err });
       const collection = client.db("main").collection("movies");
       // all server side with MongoDB
       try {

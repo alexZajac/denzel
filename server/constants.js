@@ -5,7 +5,8 @@ const IMDB_URL = "https://www.imdb.com";
 const P_LIMIT = 25;
 const LIMIT_SEARCH = 5;
 const METASCORE_SEARCH = 0;
-const { PORT, MONGO_URI } = process.env;
+let { PORT, MONGO_URI } = process.env;
+if (PORT === undefined) PORT = 9292;
 const METASCORE_DEFAULT = 70;
 
 module.exports = {
