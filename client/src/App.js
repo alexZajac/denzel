@@ -30,10 +30,15 @@ const getSearchMoviesData = async filters => {
       // fetch random movie if one film
       if (LIMIT === 1)
         response = await axios.get(`${REACT_APP_API_BASE}/movies`);
-      else
-        response = await axios.get(
-          `${REACT_APP_API_BASE}/movies/search?limit=${LIMIT}&metascore=${METASCORE}`
-        );
+      else {
+        let url = `${REACT_APP_API_BASE}/movies/search`;
+        if (LIMIT) {
+          if (METASCORE) url += `?limit=${LIMIT}&metascore=${METASCORE}`;
+          else url += `?limit=${LIMIT}`;
+        }
+        console.log(url);
+        response = await axios.get(url);
+      }
       const { data, status } = response;
       if (status === 200) return LIMIT === 1 ? [data] : data.results;
     }

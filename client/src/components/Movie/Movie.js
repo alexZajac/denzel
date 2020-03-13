@@ -38,6 +38,9 @@ const Title = styled.p`
   color: white;
   font-size: 60px;
   margin: 0;
+  @media (max-width: 600px) {
+    font-size: 42px;
+  }
 `;
 
 const Synopsis = styled.p`
@@ -45,6 +48,9 @@ const Synopsis = styled.p`
   font-family: "Lato";
   color: white;
   font-size: 26px;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 
 const HighlightText = styled.p`
@@ -54,6 +60,9 @@ const HighlightText = styled.p`
   margin: 0;
   font-weight: 700;
   margin-right: 20px;
+  @media (max-width: 920px) {
+    font-size: 26px;
+  }
 `;
 
 const Poster = styled.img`
@@ -74,6 +83,11 @@ const FadeHighlight = styled.div`
   flex-direction: column;
   justify-content: space-around;
   z-index: 0;
+  @media (max-width: 920px) {
+    left: -16vw;
+    width: 16vw;
+    height: 12vh;
+  }
 `;
 
 const Movie = ({ content }) => {

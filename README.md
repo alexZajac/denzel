@@ -269,6 +269,5 @@ You can search through **either one of the two APIs**, and select a **limit** an
 
 ### Todo:
 
-- Responsiveness for the client
 - Error checking and comments when needed
 - Secure API

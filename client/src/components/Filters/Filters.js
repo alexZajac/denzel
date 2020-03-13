@@ -1,13 +1,18 @@
 import React from "react";
 
-import { Colors, REST_API, GRAPHQL_API } from "../../Constants";
+import {
+  Colors,
+  REST_API,
+  GRAPHQL_API,
+  DEFAULT_FILTERS
+} from "../../Constants";
 import styled from "styled-components";
 import graphql from "../../assets/images/graphql.png";
 import rest from "../../assets/images/rest.png";
 
 const Container = styled.div`
   width: 100vw;
-  height: 12vh;
+  height: 10vh;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -41,6 +46,9 @@ const InputContainer = styled.div`
   flex-direction: column;
   height: 100%;
   align-items: center;
+  @media (max-width: 680px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const Logo = styled.img`
@@ -72,6 +80,32 @@ const Input = styled.input`
 const Filters = ({ filters, setFilters }) => {
   const { API, LIMIT, METASCORE } = filters;
   const apiName = API === REST_API ? "REST" : "GraphQL";
+  const handleLimitChange = LIMIT => {
+    if (LIMIT.length > 0) {
+      try {
+        const intLimit = parseInt(LIMIT);
+        setFilters({ ...filters, LIMIT: intLimit });
+      } catch (e) {
+        setFilters({ ...filters, LIMIT: undefined });
+      }
+    } else {
+      setFilters({ ...filters, LIMIT: undefined });
+    }
+  };
+
+  const handleMetascoreChange = METASCORE => {
+    if (METASCORE.length > 0) {
+      try {
+        const intMeta = parseInt(METASCORE);
+        setFilters({ ...filters, METASCORE: intMeta });
+      } catch (e) {
+        setFilters({ ...filters, METASCORE: undefined });
+      }
+    } else {
+      setFilters({ ...filters, METASCORE: undefined });
+    }
+  };
+
   return (
     <Container
       style={{
@@ -96,20 +130,16 @@ const Filters = ({ filters, setFilters }) => {
       <InputContainer>
         <InputTitle>Limit</InputTitle>
         <Input
-          placeholder={LIMIT}
-          value={LIMIT}
-          onChange={({ target: { value: LIMIT } }) =>
-            setFilters({ ...filters, LIMIT })
-          }
+          placeholder={DEFAULT_FILTERS.LIMIT}
+          onChange={({ target: { value: LIMIT } }) => handleLimitChange(LIMIT)}
         />
       </InputContainer>
       <InputContainer>
         <InputTitle>Metascore</InputTitle>
         <Input
-          placeholder={METASCORE}
-          value={METASCORE}
+          placeholder={DEFAULT_FILTERS.METASCORE}
           onChange={({ target: { value: METASCORE } }) =>
-            setFilters({ ...filters, METASCORE })
+            handleMetascoreChange(METASCORE)
           }
         />
       </InputContainer>

@@ -9,6 +9,10 @@ const Head = styled.div`
   background-color: ${Colors.secondShade};
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  @media (max-width: 860px) {
+    justify-content: center;
+  }
 `;
 const Denzl = styled.p`
   margin: 0;
