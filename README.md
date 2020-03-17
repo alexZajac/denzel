@@ -2,8 +2,6 @@
 
 > The must-watch Denzel's movies
 
-![denzel](https://m.media-amazon.com/images/M/MV5BMjE5NDU2Mzc3MV5BMl5BanBnXkFtZTcwNjAwNTE5OQ@@._V1_SY1000_SX750_AL_.jpg)
-
 - [DENZL](#denzl)
   - [🎯 Objectives of the project](#%f0%9f%8e%af-objectives-of-the-project)
   - [👩‍💻 Installation](#%f0%9f%91%a9%e2%80%8d%f0%9f%92%bb-installation)
