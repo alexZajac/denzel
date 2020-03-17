@@ -36,7 +36,6 @@ const getSearchMoviesData = async filters => {
           if (METASCORE) url += `?limit=${LIMIT}&metascore=${METASCORE}`;
           else url += `?limit=${LIMIT}`;
         }
-        console.log(url);
         response = await axios.get(url);
       }
       const { data, status } = response;

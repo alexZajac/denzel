@@ -5,8 +5,11 @@ const IMDB_URL = "https://www.imdb.com";
 const P_LIMIT = 25;
 const LIMIT_SEARCH = 5;
 const METASCORE_SEARCH = 0;
-let { PORT, MONGO_URI } = process.env;
-if (PORT === undefined) PORT = 9292;
+const PORT = process.env.NODE_ENV === "production" ? process.env.PORT : 9292;
+const MONGO_URI =
+  process.env.NODE_ENV === "production"
+    ? process.env.MONGO_URI
+    : "mongodb+srv://dbUser:2ExdAZ8oYImQBR1V@denzelcluster-pv8n7.azure.mongodb.net/test?retryWrites=true&w=majority";
 const METASCORE_DEFAULT = 70;
 
 module.exports = {
