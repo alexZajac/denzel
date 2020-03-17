@@ -264,8 +264,3 @@ You can search through **either one of the two APIs**, and select a **limit** an
   - display the metascore
   - display the review
   - allow to open the IMDb record
-
-### Todo:
-
-- Error checking and comments when needed
-- Secure API
