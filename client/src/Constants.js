@@ -5,7 +5,7 @@ const Colors = {
   lightShade: "#6472F6"
 };
 
-const { REACT_APP_API_BASE } = process.env;
+const REACT_APP_API_BASE = "https://denzel-apis.herokuapp.com";
 
 const MUST_WATCH_METASCORE = 70;
 const REST_API = "REST_API";
