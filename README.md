@@ -38,6 +38,7 @@
 
 ```sh
 ❯ cd /server
+❯ npm i
 ❯ npm run dev
 ```
 
@@ -45,6 +46,7 @@
 
 ```sh
 ❯ cd /client
+❯ npm i
 ❯ npm start
 ```
 
