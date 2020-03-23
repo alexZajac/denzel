@@ -5,7 +5,8 @@ const Colors = {
   lightShade: "#6472F6"
 };
 
-const { REACT_APP_API_BASE } = process.env;
+let { REACT_APP_API_BASE } = process.env;
+if(REACT_APP_API_BASE === undefined) REACT_APP_API_BASE = "http://localhost:9292";
 
 const MUST_WATCH_METASCORE = 70;
 const REST_API = "REST_API";

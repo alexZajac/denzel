@@ -234,8 +234,22 @@ Same definitions as REST API with `/graphql` endpoint.
   }
 ```
 
+
+Here are the same endpoints with graphql:
+
 ```sh
-❯ curl -d '{"query": "randomMovie {link metascore synopsis title year}"}' -H "Content-Type: application/json" http://localhost:9292/graphql
+❯ curl -d '{"query": "{ populate(id: \"nm0000243\") { total }}"}' -H "Content-Type: application/json" http://localhost:9292/graphql
+{
+  "data": {
+    "populate": {
+      "total": 58
+    }
+  }
+}
+```
+
+```sh
+❯ curl -d '{"query": "{ randomMovie { link metascore synopsis title year }}"}' -H "Content-Type: application/json" http://localhost:9292/graphql
 {
   "data": {
     "movie": {
@@ -248,6 +262,61 @@ Same definitions as REST API with `/graphql` endpoint.
   }
 }
 ```
+
+```sh
+❯ curl -d '{"query": "{ movie(id: \"tt0477080\") { link metascore synopsis title year }}"}' -H "Content-Type: application/json" http://localhost:9292/graphql
+{
+  "data": {
+    "movie": {
+      "link": "https://www.imdb.com/title/tt0477080/?ref_=nm_flmg_act_11",
+      "metascore": 69,
+      "synopsis": "With an unmanned, half-mile-long freight train barreling toward a city, a veteran engineer and a young conductor race against the clock to prevent a catastrophe.",
+      "title": "Unstoppable (2010)",
+      "year": 2010
+    }
+  }
+}
+```
+
+```sh
+❯ curl -d '{"query": "{ searchMovie(limit: 2, metascore: 73) { limit metascore results { link metascore synopsis title year } }}"}' -H "Content-Type: application/json" http://localhost:9292/graphql
+{
+  "data": {
+    "searchMovie": {
+      "limit": 2,
+      "metascore": 73,
+      "results": [
+        {
+          "link": "https://www.imdb.com/title/tt2671706/?ref_=nm_flmg_act_5",
+          "metascore": 79,
+          "synopsis": "A working-class African-American father tries to raise his family in the 1950s, while coming to terms with the events of his life.",
+          "title": "Fences (2016)",
+          "year": 2016
+        },
+        {
+          "link": "https://www.imdb.com/title/tt0112857/?ref_=nm_flmg_act_34",
+          "metascore": 78,
+          "synopsis": "An African-American man is hired to find a woman, and gets mixed up in a murderous political scandal.",
+          "title": "Le diable en robe bleue (1995)",
+          "year": 1995
+        }
+      ]
+    }
+  }
+}
+```
+
+```sh
+❯ curl -d '{"query": "{ postReview(id: \"tt0477080\", date: \"22/03/2020\", review: \"Awesome!\") { _id }}"}' -H "Content-Type: application/json" http://localhost:9292/graphql
+{
+  "data": {
+    "postReview": {
+      "_id": "5e786d6428c247be3c123933"
+    }
+  }
+}
+```
+
 
 ### Bonus - The Client side
 

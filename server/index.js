@@ -17,8 +17,6 @@ const dbProvider = require("./utils/dbprovider");
 const app = express();
 const schema = new GraphQLSchema({ query: queryType });
 
-module.exports = app;
-
 app.use(require("body-parser").json());
 app.use(cors());
 app.use(helmet());
@@ -73,7 +71,7 @@ app.get("/movies/:id", async (request, response) => {
       let limit = parseInt(request.query.limit || LIMIT_SEARCH);
       let metascore = parseInt(request.query.metascore || METASCORE_SEARCH);
       const results = await dbProvider.searchMovies(limit, metascore);
-      response.send({ limit, metascore, results });
+      response.send({ limit, metascore, total: results.length, results });
     } else {
       const movie = await dbProvider.getMovie(id);
       response.send(movie);
@@ -100,3 +98,6 @@ app.post("/movies/:id", async (request, response) => {
 
 app.listen(PORT);
 console.log(`📡 Running on port ${PORT}`);
+
+
+module.exports = app;
